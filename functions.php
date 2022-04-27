@@ -221,6 +221,13 @@ class PlaceholderBlock
 new PlaceholderBlock("eventsandblogs");
 new PlaceholderBlock("header");
 new PlaceholderBlock("footer");
+new PlaceholderBlock("singlepost");
+new PlaceholderBlock("page");
+new PlaceholderBlock("blogindex");
+new PlaceholderBlock("programarchive");
+new PlaceholderBlock("singleprogram");
+new PlaceholderBlock("singleprofessor");
+new PlaceholderBlock("mynotes");
 
 
 
@@ -267,3 +274,16 @@ new JSXBlock('genericheading');
 new JSXBlock('genericbutton');
 new JSXBlock('slideshow', true);
 new JSXBlock('slide', true, ['themeimagepath' => get_theme_file_uri('/images/')]);
+
+function myallowedblocks($allowed_block_types, $editor_context)
+{
+  //If you are on a page/post editor screen
+  if (!empty($editor_context->post)) {
+    return $allowed_block_types;
+  }
+
+  //If you are on the FSE screen
+  return array('ourblocktheme/header', 'ourblocktheme/footer');
+}
+
+add_filter('allowed_block_types_all', 'myallowedblocks', 10, 2);
